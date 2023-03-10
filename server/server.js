@@ -9,11 +9,16 @@ const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+// run server using apollo
+
 // const server = new ApolloServer({
 //   typeDefs,
 //   resolvers,
 //   context: authMiddleware
 // });
+
+// middleware functionality
 
 // server.applyMiddleware({ app });
 
@@ -23,10 +28,12 @@ app.use(express.json());
 // Serve up static assets
 // app.use('/images', express.static(path.join(__dirname, '../client/Assets/Images')));
 
+// USE Concurrently 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-}
+};
 
+// get response from react app's index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
