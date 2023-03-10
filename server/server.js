@@ -1,14 +1,14 @@
 const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
-
+const path = require('path');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'build')));
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewPArser: true, useCreateIndex: true, useUnifiedTopology: true });
-app.listen(port, () => { console.log();
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
