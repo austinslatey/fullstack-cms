@@ -38,6 +38,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+// Catch-all error middleware function to improve error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+// Fallback route to handle requests to unknown routes
+app.use((req, res, next) => {
+  res.status(404).send('Sorry, we cannot find that!');
+});
+
 // Once GQL Server is Ready
 db.once('open', () => {
   app.listen(PORT, () => {
@@ -47,3 +58,5 @@ db.once('open', () => {
   });
 
 });
+
+
