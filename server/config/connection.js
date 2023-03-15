@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const uri = process.env.SECRET_URI;
+const uri = process.env.SECRET;
 
-mongoose.connect(uri|| "mongodb://localhost/", {
+mongoose.connect(uri || "mongodb://localhost/", {
   // MongoDB connection string using the new URL parser.
   useNewUrlParser: true,
   // New unified topology engine for the MongoDB driver, provides better handling of replica sets and sharded clusters
