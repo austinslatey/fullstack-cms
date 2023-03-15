@@ -1,10 +1,10 @@
-// require('dotenv').config()
+require('dotenv').config()
 const express = require('express');
-// const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 
-// const { typeDefs, resolvers } = require('./schemas');
-// const { authMiddleware } = require('./utils/auth');
+const { typeDefs, resolvers } = require('./schemas');
+const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
@@ -12,21 +12,21 @@ const app = express();
 
 // run server using apollo
 
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-//   context: authMiddleware
-// });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+});
 
 // middleware functionality
 
-// server.applyMiddleware({ app });
+server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Serve up static assets
-// app.use('/images', express.static(path.join(__dirname, '../client/Assets/Images')));
+app.use('/images', express.static(path.join(__dirname, '../client/Assets/Images')));
 
 // USE Concurrently 
 if (process.env.NODE_ENV === 'production') {
@@ -38,14 +38,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-
+// Once GQL Server is Ready
+db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     // GQL path
-    // console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 
-  // Once GQL Server is Ready
-  // db.once('open', () => {
 
-  // });
+
+});
