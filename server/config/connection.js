@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const uri = process.env.URI;
 
-mongoose.connect(uri ,{
+mongoose.connect(uri, {
   // MongoDB connection string using the new URL parser.
   useNewUrlParser: true,
   // New unified topology engine for the MongoDB driver, provides better handling of replica sets and sharded clusters
@@ -12,7 +12,7 @@ mongoose.connect(uri ,{
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.once('open', function () {
   console.log('MongoDB database connection established successfully');
 });
 
